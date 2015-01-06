@@ -1,0 +1,35 @@
+### Bugs ###
+
+### Tests ###
+
+### Desired Features ###
+
+ - Enter specimens into collection.
+ - Navigate/View specimens in collection.
+ - Edit specimens in collection.
+
+ - Drop-down AND/OR auto-complete AND/OR shortcut-window.
+    * Results of can be limited by factors such as location.
+    * Alphabetical order or other specified order.
+ - One 'master' text box or edit area that can switch to different fields, allowing one to enter all data using that one text box or edit area.
+ - Some fields can be set to use data from the last specimen entered.
+
+ - A 'View Mode' specifically designed for collection viewing.
+ - Program can generate a web-based collection display.
+ - Easy database backup.
+ - Browse to Mindat and minID pages
+ - Collection searching.
+ - Users can choose not do display fields that they don't intend to use.
+ - Images
+    * Can be displayed with search results or while adding/editing.
+    * Image editing function in the application such as cropping.
+    * Thumbnail generation.
+ - Label creation.
+ - Integrated spell check, especially for descriptions/comments.
+ - Map integration(google maps?).
+    * Display locations based on a database search result.
+    * Draw lines between locations.
+ - Obtain data for the database from other sources.
+    * MaxMind or GeoNames: Location data from an api or downloadable file.
+    * IMA: Mineral data from a downloadable file.
+    * Mindat: Data from limited web browsing. Otherwise, ask Mindat for possible integration solutions for their mineral database and user catalogs.

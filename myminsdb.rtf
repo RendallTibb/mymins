@@ -1,0 +1,88 @@
+<TableOrRelationField>
+  Field:
+
+<Specimens>
+  SpecimenID: is a UNIQUE set of numbers(and or characters) used to identify every different specimen in a collection.
+
+  minID: is a UNIQUE set of six(possibly seven in the future) alpha-numeric characters assigned to every different specimen that uses minID. You can use this identifier to view a specimen's history such as previous owners, mineral identifications, repairs, etc,. To obtain a minID for a specimen, you must use the minID's web-service or a site that uses it such as Mindat or Minfind. For SpecimenID and mindID, some collecters use one, the other, or both. For more info see(minID page -http://www.mindat.org/minid_about.php).
+
+  Height:
+  Length:
+  Width:
+  Units: Could set program preference for single unit and provide auto-conversion instead of this.
+  Weight:
+  WeightUnits:
+  The following four fields are a collectors personal estimations.
+    Appraisal: Public price for the piece.(Currency)
+    Rating: Personal value of the piece(0.00-10).
+    Transparency: for all minerals on the piece overall(0.00-10).
+    Crystallization: Presence of crystals and how well they are formed(0.00-10).
+  Repaired: Piece restored to natural state as much as possible.
+  Artificial: Unnaturally created specimen.
+  <CommentID>
+
+<> Considering a Title table for first featured text displayed with a mineral. User could choose what fields to include. If the user wishes to use a custom-made title, they could create a new member in a field such as Synonym or Group and then use that field. e.g., create group 'fossil' and choose to show that group as the title. Perhaps multiple minerals could be chosen from a shortcut list of minerals that pertain to that specific specimen, but user could also choose minerals/groups that don't pertain to that specimen.
+
+<MindatAndMins> Combines the following identity tables and allows assigning a Mindat ID for direct web-page lookup. The ID may also work for gemdat.org. The following tables may also have fields added later for data such as a minerals physical properties or series chemical properties. Such data could be filled in automatically when looking up a mineral's page on Mindat.
+  <IMA> International Mineral Association approved mineral.
+  <Mixture> A thing that is not IMA, Variety, or Synonym.
+  <Variety> A variety of an IMA, Other, or Variety.
+  <Synonym> Another name for any of the 3 above fields.
+  <Series> Minerals with similar features(formula? crystal structure?)
+  <Group> Minerals related by less specific means than series.
+
+Info about Mindat's format for Approved Minerals, Synonyms, Varieties, Series, Mixture, Group can be found at http://manual.mindat.org/index.php/Mineral_Information
+
+<MinsRelations> Connects all the types combined in <MindatAndMins>. 
+
+<SpecimensMins> One specimen can have multiple minerals or objects that can be identified using one field connected to <MindatAndMins>. The type of field to use depends on what information is available about a specimen, but should be done in the following order: Variety, IMA, Synonym, Mixture, Series, Group. As information is obtained later the MinsID can be changed to a greater priority field.
+
+<images> A number of images of the specimen. Program note: If there are no images, a general mineral image could be shown for a particular mineral. But it should be noted in the viewer that it is a general image and not an image of the particular specimen.
+  <ImagePath> Location of the image file.
+  ImageName: The name of the image file.
+  ImagePriority: Order in which images are shown.
+
+<Acquisition> Current and previous. This will also keep track of relations/affiliations between shops, dealers, locales, etc.
+  <SpecimenID> Specimens can have a history of multiple acquisitions.
+  ToContactID: Who acquired the mineral.
+  FromContactID: Who it was acquired from.
+  <AcquireType> collected, purchased(single), purchased(bulk), flat, field trip, mine dirt, trade, etc.
+  AcquireDate: Date it was acquired by ToContactID.
+  AcquirePrice: Price of the specimen when it was acquired on AcquireDate.
+  <ExposureID> Lists where(e.g., south dumps, quarry wall, Pocket 83, Brian pit) and when at a locale that a specimen was found or originated from. One locale for a specimen is recorded in the acquisition table. This field will only be used for locales. It could be put in the specimen table to save space but could add to confusion.
+  <AvailableID> Indicates the affiliation status of the ToContact and FromContact.
+
+<Availability> uses data in the following tables. The same AvailableID can be used by multiple sources. If only one of such sources would need to be edited in the future, than that one source should be assigned a new availability ID or one that is the same as what it is being changed to.
+  <Dates>
+    Day: 1-31
+    Month: 1-12 + enumerations for fall(13), winter(14), spring(15), and summer(16).
+    Year: + enumeration for year-round(-1), closed(-2), Inquire(-3)
+  <Days> Days of the week that are available and times as well. There may be different times on different days.
+
+
+The following tables are combined in <ContactInformation>
+  <Locale>: Refers to the general location that a mineral is removed from the earth. Locales do not include shops, dealer, road fill(determine source if possible), or under your couch cushions. A local may be a road cut, mine, quarry, prospect, etc,.
+  <Dealer> A person that sells minerals.
+  <Shop> A place(or website) where minerals are sold.
+  <Club> A mineral club.
+  <Person> A person that is not a dealer.
+  <OtherOrganization> Such as a national forest or state agency.
+
+<Affiliations> Removed for the time being. Showed the relation between ContactIDs. Relations are somewhat shown with <Acquisition>.
+
+<Contact info>
+Please give reminder to anyone publicizing parts of this database, to do so with respect to the locale owners in regards to location of closed quarries or contact information.
+	<ContactID>
+	<Address>
+	<City>
+	<County>
+	<State>(or region)
+	<Country>
+	GPSlat:
+	GPSlon:
+	Phone:
+ 	email:
+	website:
+ 	<Comment>
+
+<> May want to add relations to countries, cities, states, etc. The program could also use an external data source(website api) or import from another database.
