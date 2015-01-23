@@ -1,3 +1,9 @@
+0.0.2 - 01/23/14 - Created UI, Can add/edit specimens/minerals.
+
+ - Enter specimens into collection.
+ - Navigate/View specimens in collection.
+ - Edit specimens in collection.
+ - Database re-structure.
 
 0.0.1 - 01/06/14 - Created database and project files.
  

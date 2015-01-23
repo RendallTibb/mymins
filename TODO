@@ -4,10 +4,7 @@
 
 ### Desired Features ###
 
- - Enter specimens into collection.
- - Navigate/View specimens in collection.
- - Edit specimens in collection.
-
+(Partially Implemented)
  - Drop-down AND/OR auto-complete AND/OR shortcut-window.
     * Results of can be limited by factors such as location.
     * Alphabetical order or other specified order.
