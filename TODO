@@ -11,6 +11,7 @@
  - One 'master' text box or edit area that can switch to different fields, allowing one to enter all data using that one text box or edit area.
  - Some fields can be set to use data from the last specimen entered.
 
+ - Notification below close button of number of unsaved changes.
  - A 'View Mode' specifically designed for collection viewing.
  - Program can generate a web-based collection display.
  - Easy database backup.

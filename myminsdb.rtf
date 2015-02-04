@@ -1,14 +1,15 @@
-Key:
+This file has information about the database structure.
+Key for this file:
 <TableOrRelationField>
   Field:
 <> ProposedTable: Not implemented yet.
 
+Some reference tables are shared by other tables to help save space but may incur an overhead for deletions.
+
 <Spec> Specimen Information
-  SpecID: is a UNIQUE set of numbers used to identify every different specimen in a collection.
+  UserSpecID: is used to identify every different specimen in a collection. I prefer using unique numbers only, but other collectors may have a character ID system.
 
-<> SpecIDText: For a collector that uses letters/symbols in their specimen IDs.
-
-  minID: is a UNIQUE set of six(possibly seven in the future) alpha-numeric characters assigned to every different specimen that uses minID. You can use this identifier to view a specimen's history such as previous owners, mineral identifications, repairs, etc. To obtain a minID for a specimen, you must use the minID's web-service or a site that uses it such as Mindat or Minfind. For SpecimenID and mindID, some collecters use one, the other, or both. For more info see(minID page -http://www.mindat.org/minid_about.php).
+  minID: is a UNIQUE set of six(possibly seven in the future) alpha-numeric characters assigned to every different specimen that uses minID. You can use this identifier to view a specimen's history such as previous owners, mineral identifications, repairs, etc. To obtain a minID for a specimen, you must use the minID's web-service or a site that uses it such as Mindat or Minfind. For SpecimenID and mindID, some collectors use one, the other, or both. For more info see(minID page -http://www.mindat.org/minid_about.php).
 
   Height:
   Length:
@@ -25,7 +26,7 @@ Key:
   Artificial: Unnaturally created specimen.
   <CommentID>
 
-<> Considering a Title table for first featured text displayed with a mineral. User could choose what fields to include. If the user wishes to use a custom-made title, they could create a new member in a field such as Synonym or Group and then use that field. e.g., create group 'fossil' and choose to show that group as the title. Perhaps multiple minerals could be chosen from a shortcut list of minerals that pertain to that specific specimen, but user could also choose minerals/groups that don't pertain to that specimen.
+<> Title: For the first featured text displayed with a mineral. User could choose what fields to include. If the user wishes to use a custom-made title, they could create a new member in a field such as Synonym or Group and then use that field. e.g., create group 'fossil' and choose to show that group as the title. Perhaps multiple minerals could be chosen from a shortcut list of minerals that pertain to that specific specimen, but user could also choose minerals/groups that don't pertain to that specimen.
 
 <Mins> 
   Mindat ID: For direct web-page lookup. The ID may also work for gemdat.org.
@@ -46,7 +47,7 @@ Info about Mindat's format for Approved Minerals, Synonyms, Varieties, Series, M
 <SpecMins> One specimen can have multiple minerals or objects that can be identified by types in <Mins>. The type to use depends on what information is available about a specimen, but should be done in the following order: Variety, IMA, Synonym, Mixture, Series, Group. As information is obtained later, the MinsID can be changed to a greater priority field.
 
 <SpecImgs> A number of images of the specimen. Program note: If there are no images, a general mineral image could be shown for a particular mineral. But it should be noted in the viewer that it is a general image and not an image of the particular specimen.
-  <ImgsPath> Location of the image file.
+  <ImgsPath> Location of the image file. Shared with ContactImgs
   ImageName: The name of the image file.
   ImagePriority: Order in which images are shown.
 <ContactImgs> Like SpecImgs but for all types of contacts.
@@ -56,17 +57,14 @@ Info about Mindat's format for Approved Minerals, Synonyms, Varieties, Series, M
   ToContactID: Who acquired the mineral.
   FromContactID: Who it was acquired from.
   <AcquireType> collected, purchased(single), purchased(bulk), flat, field trip, mine dirt, trade, etc.
-  AcquireDateID: Date it was acquired by ToContactID.
+  AcquireDate: Date it was acquired by ToContactID.
   AcquirePrice: Price of the specimen when it was acquired on AcquireDate.
   <ExposureID> Lists where(e.g., south dumps, quarry wall, Pocket 83, Brian pit) at a locale that a specimen was found or originated from. This includes the date of the exposure was created/excavated. Considering moving this to the Spec table.
-  <AvailableID> Indicates the affiliation status of the ToContact and FromContact.
+  <AvailableID> Indicates the affiliation status of the ToContact and FromContact at the time of acquisition.
 
 <Availability> uses data in the following tables. The same AvailableID can be used by multiple sources. If only one of those sources needed to be edited, then it could be assigned a new availability ID, or an existing one that matches.
-  <Dates>
-    DatesDay: 1-31
-    DatesMonth: 1-12 + enumerations for fall(13), winter(14), spring(15), and summer(16).
-    DatesYear: + enumeration for year-round(-1), closed(-2), Inquire(-3)
-  <OpenHours> Hours durring the day when a place is open.
+Date fields: The program may include an enumeration for fall, winter, spring, summer, year-round, closed, and Inquire.
+  <OpenHours> Hours during the day when a place is open. Some contacts may have the same hours, so there will be some duplication for different Available IDs.
     <Days> Allows selecting individual or multiple days of the week and reusing selections.
 
 <Contact>
@@ -96,4 +94,3 @@ Please give reminder to anyone publicizing parts of this database, to do so with
 <> May want to add relations to countries, cities, states, etc. The program could also use an external data source(website api) or import from another database.
 
 <ContactMindat> Mindat locales have IDs that link to their pages. So this table is just for those. Possibly Mindat could host other contact sources as well?
-

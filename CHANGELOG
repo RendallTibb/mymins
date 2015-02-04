@@ -1,10 +1,15 @@
-0.0.2 - 01/23/14 - Created UI, Can add/edit specimens/minerals.
+0.0.3 - 02/04/15 - Added Acquisitions, Fixed mineral bugs.
+
+ - Added Acquisition FromContact and Date and result window.
+ - Lesser Database restructure
+
+0.0.2 - 01/23/15 - Created UI, Can add/edit specimens/minerals.
 
  - Enter specimens into collection.
  - Navigate/View specimens in collection.
  - Edit specimens in collection.
  - Database re-structure.
 
-0.0.1 - 01/06/14 - Created database and project files.
+0.0.1 - 01/06/15 - Created database and project files.
  
 0.0.0 - 12/12/14 - Project Start
