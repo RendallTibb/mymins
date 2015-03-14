@@ -1,15 +1,29 @@
-0.0.3 - 02/04/15 - Added Acquisitions, Fixed mineral bugs.
+0.8.0 - 03/14/15 - Added several fields, UI customization.
+
+ - Added fields: Specimen minID, Mineral Edit(Name, Member, MindatID), Specimen Details(Height, Weight, Length, Width, Units, Weight, wUnits, Repaired, Artificial, Appraisal, Rating, Transparency, Crystallization, Comment), From Contact(Name, Country, State, City, Address, Type, GPS lat, GPS lon, Phone, Email, Web, Comment, MindatID, Exposure Edit(Name, Date)), Acquisition(To, Price, Type, Exposure).
+ - User interface customization
+    * Persistent settings allow hiding unused fields.
+    * The interface adapts to changes in size.
+ - Removed broken specimen auto-increment
+ - Minerals, Exposures, and Contacts can be edited individually in their own panels. They can all be navigated using related ComboBoxs in other panels. New default records for each can also be created if a new name is entered in a ComboBox and the related 'Add' Button is clicked. In addition, Exposure fields and the MindatID field will be hidden for contacts that are not Locales.
+ - Acquisition From, To, and Date fields for a new specimen are automatically filled using the first Acquisition from the last entered specimen.
+ - Countries, States, Counties, Cities, and Acquisition Types can only be added at this time.
+ - Depending on the type of Contacts selected for Acquisitions, the Type ComboBox may suggest a predefined type.
+ - If an invalid value is entered into a field, it may be auto-corrected, otherwise a error is shown. If the error is shown, the input may need to be corrected or deleted.
+ - Minor Database changes. Related files will be updated after the next change. ContactMinID and Address had been moved into Contact. AvailableID removed from Acquisition.
+
+0.3.0 - 02/04/15 - Added Acquisitions, Fixed mineral bugs.
 
  - Added Acquisition FromContact and Date and result window.
  - Lesser Database restructure
 
-0.0.2 - 01/23/15 - Created UI, Can add/edit specimens/minerals.
+0.2.0 - 01/23/14 - Created UI, Can add/edit specimens/minerals.
 
  - Enter specimens into collection.
  - Navigate/View specimens in collection.
  - Edit specimens in collection.
  - Database re-structure.
 
-0.0.1 - 01/06/15 - Created database and project files.
+0.1.0 - 01/06/14 - Created database and project files.
  
 0.0.0 - 12/12/14 - Project Start

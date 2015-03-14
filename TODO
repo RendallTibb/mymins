@@ -1,4 +1,4 @@
-### Bugs ###
+### Known Issues ###
 
 ### Tests ###
 
@@ -6,17 +6,27 @@
 
 (Partially Implemented)
  - Drop-down AND/OR auto-complete AND/OR shortcut-window.
-    * Results of can be limited by factors such as location.
+    * Results can be limited by factors such as location.
     * Alphabetical order or other specified order.
- - One 'master' text box or edit area that can switch to different fields, allowing one to enter all data using that one text box or edit area.
- - Some fields can be set to use data from the last specimen entered.
+ - Some fields can be set to use data from the last specimen entered. And some Fields can be left blank after adding/updating entries.
 
- - Notification below close button of number of unsaved changes.
- - A 'View Mode' specifically designed for collection viewing.
+(Unimplemented)
+ - Hover-over contact in acquisitions shows brief contact info.
+ - Display a mineral's ID type(by icon?) in mineral lists.
+ - Note effected specimens if a contact is deleted or updated.
+ - Customize what warnings are displayed and what automatic operations are performed.
+ - Notification near close button of number of unsaved changes.
+ - Process time-based GPS formats and cardinal directions.
+ - Allow phone number formatting. For other countries as well.
+ - (optional)Auto-Increment of specimen IDs.
+ - Allow adding/editing exposure date in the acquisition area.
+ - One 'master' text box or edit area that can switch to different fields, allowing one to enter all data using that one text box or edit area.
+- A 'View Mode' specifically designed for collection viewing.
  - Program can generate a web-based collection display.
  - Easy database backup.
  - Browse to Mindat and minID pages
  - Collection searching.
+ - Collection sorting.
  - Users can choose not do display fields that they don't intend to use.
  - Images
     * Can be displayed with search results or while adding/editing.
