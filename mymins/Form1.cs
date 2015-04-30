@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Deployment.Application;
+using System.Data.SQLite;
 
 namespace mymins
 {
@@ -19,7 +22,10 @@ namespace mymins
         private String acquTypeSelfCollected = "Self Collected";
         private String nullMinName = "<unidentified>";
         private String nullConName = "<unknown>";
+        
+        // For selecting a duplicate in Contact ComboBoxes.
         private int cbxDupIndx;
+        private bool cbxLeave = false;
 
         public Form1()
         {
@@ -28,37 +34,49 @@ namespace mymins
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            // Check/Setup db;
+            try
+            {
+                // Uncomment the line below when using SQLite. (see readme)
+                //dbValidate();
+            }
+            catch
+            {
+                MessageBox.Show("There was a problem communicating with the database.\r\n\r\nConnection:\r\n" + Properties.Settings.Default.myminsConnectionString + "\r\n\r\nThe program will continue to load, but will be in an usable state.");
+                throw;
+            }
+
             // Load data into the DataSet.
             try
             {
                 this.commentTableAdapter.Fill(this.myminsDataSet.Comment);
+                this.specTableAdapter.Fill(this.myminsDataSet.Spec);
+                this.minsTypesTableAdapter.Fill(this.myminsDataSet.MinsTypes);
+                this.minsTableAdapter.Fill(this.myminsDataSet.Mins);
+                //this.minsRelationsTableAdapter.Fill(this.myminsDataSet.MinsRelations);
+                this.specMinsTableAdapter.Fill(this.myminsDataSet.SpecMins);
+                //this.ImgsPathsTableAdapter.Fill(this.myminsDataSet.ImgsPaths);
+                //this.SpecImgsTableAdapter.Fill(this.myminsDataSet.ImgsPaths);
+                this.countryTableAdapter.Fill(this.myminsDataSet.Country);
+                this.stateTableAdapter.Fill(this.myminsDataSet.State);
+                this.countyTableAdapter.Fill(this.myminsDataSet.County);
+                this.cityTableAdapter.Fill(this.myminsDataSet.City);
+                this.contactTypeTableAdapter.Fill(this.myminsDataSet.ContactType);
+                //this.timesTableAdapter.Fill(this.myminsDataSet.Times);
+                //this.availabilityTableAdapter.Fill(this.myminsDataSet.Availability);
+                //this.daysTableAdapter.Fill(this.myminsDataSet.Days);
+                //this.openHoursTableAdapter.Fill(this.myminsDataSet.OpenHours);
+                this.contactTableAdapter.Fill(this.myminsDataSet.Contact);
+                //this.contactImgsTableAdapter.Fill(this.myminsDataSet.ContactImgs);
+                this.exposureTableAdapter.Fill(this.myminsDataSet.Exposure);
+                this.acquireTypeTableAdapter.Fill(this.myminsDataSet.AcquireType);
+                this.acquisitionTableAdapter.Fill(this.myminsDataSet.Acquisition);
             }
             catch
             {
-                MessageBox.Show("There is a problem connecting to the database. Make sure the file mymins.mdf exists in the same location as the program.", "Database connection issue", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close();
-                return;
+                MessageBox.Show("There is a problem with your mineral collection database's schema or data. This can be caused by file corruption or database changes made outside of MyMins.\r\n\r\nRecommended solutions: \r\n- If you made a backup of the database then restore it.\r\n- Accept the data loss and rename or delete the database. MyMins will create new database the next time it starts.\r\n- Use a third party SQLite tool to verify that the data is intact, and that it uses the same schema as a new MyMins database.\r\n\r\nThe program will continue to load, but will be in an unusable state.\r\n\r\n", "Database error.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw;
             }
-            this.specTableAdapter.Fill(this.myminsDataSet.Spec);
-            this.minsTypesTableAdapter.Fill(this.myminsDataSet.MinsTypes);
-            this.minsTableAdapter.Fill(this.myminsDataSet.Mins);
-            //this.minsRelationsTableAdapter.Fill(this.myminsDataSet.MinsRelations);
-            this.specMinsTableAdapter.Fill(this.myminsDataSet.SpecMins);
-            //this.ImgsPathsTableAdapter.Fill(this.myminsDataSet.ImgsPaths);
-            //this.SpecImgsTableAdapter.Fill(this.myminsDataSet.ImgsPaths);
-            this.countryTableAdapter.Fill(this.myminsDataSet.Country);
-            this.stateTableAdapter.Fill(this.myminsDataSet.State);
-            this.countyTableAdapter.Fill(this.myminsDataSet.County);
-            this.cityTableAdapter.Fill(this.myminsDataSet.City);
-            this.contactTypeTableAdapter.Fill(this.myminsDataSet.ContactType);
-            //this.availabilityTableAdapter.Fill(this.myminsDataSet.Availability);
-            //this.daysTableAdapter.Fill(this.myminsDataSet.Days);
-            //this.openHoursTableAdapter.Fill(this.myminsDataSet.OpenHours);
-            this.contactTableAdapter.Fill(this.myminsDataSet.Contact);
-            //this.contactImgsTableAdapter.Fill(this.myminsDataSet.ContactImgs);
-            this.exposureTableAdapter.Fill(this.myminsDataSet.Exposure);
-            this.acquireTypeTableAdapter.Fill(this.myminsDataSet.AcquireType);
-            this.acquisitionTableAdapter.Fill(this.myminsDataSet.Acquisition);
 
             // By default, you cannot leave a TextBox with an empty string if it is bound to a numeric field, even if the DataSource accepts nulls.
             minIDMaskedTextBox.DataBindings[0].NullValue = "";
@@ -78,6 +96,9 @@ namespace mymins
             conMindatIDTextBox.DataBindings[0].NullValue = "";
             emailTextBox.DataBindings[0].NullValue = "";
             webTextBox.DataBindings[0].NullValue = "";
+            expoDatePartsBox.DataBindings[0].NullValue = "";
+            expoDatePartsBox.DataBindings[1].NullValue = "";
+            expoDatePartsBox.DataBindings[2].NullValue = "";
 
             // acquDataGridView designer Note: Adjusting the form's height at design time may change the DataGrid's height of 97.
             // To change it back, the form height must be decreased to hide most of the DataGrid, and then the DataGrid size can be set to 97.
@@ -153,9 +174,10 @@ namespace mymins
             panelConComment.Visible = true;
             panelConMindatID.Visible = true;
             flowLayoutPanelExpoEdit.Visible = true;
+            expoDatePartsBox.Visible = true;
 
             panelAcquTo.Visible = true;
-            panelAcquDate.Visible = true;
+            acquDatePartsBox.Visible = true;
             panelAcquPrice.Visible = true;
             panelAcquType.Visible = true;
             panelAcquExposure.Visible = true;
@@ -170,11 +192,59 @@ namespace mymins
             fromComboBox.SelectedIndex = -1;
             var currentConRow = (DataRowView)contactBindingSource.Current;
             currentConRow.BeginEdit();
+
         }
 
 
         #region App
 
+        private void dbValidate()
+        {
+            bool newdb = false;
+            string dbfile = "mymins.sqlite";
+            string userdbDirPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MyMins");
+            string userdbPath = Path.Combine(userdbDirPath, dbfile);
+            Properties.Settings.Default["myminsConnectionString"] = "Data Source=" + userdbPath + "; Version=3; FailIfMissing=True;";
+
+            if (!Directory.Exists(userdbDirPath))
+            {
+                Directory.CreateDirectory(userdbDirPath);
+            }
+            if (!File.Exists(userdbPath))
+            {
+                MessageBox.Show("Creating a new mineral collection database file at " + userdbPath, "New mineral collection.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                SQLiteConnection.CreateFile(userdbPath);
+                newdb = true;
+            }
+            
+            using (var conn = new SQLiteConnection(Properties.Settings.Default["myminsConnectionString"].ToString()))
+            {
+                conn.Open();
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    if (newdb)
+                    {
+                        cmd.CommandText = mymins.Properties.Resources.v1_0_0;
+                        cmd.ExecuteNonQuery();
+                    }
+                    else
+                    {
+                        // Check if the current user database is compatible with this verion of the program.
+                        var ma = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Major.ToString();
+                        var mi = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Minor.ToString();
+                        var bu = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Build.ToString();
+                        cmd.CommandText = "SELECT MyMinsMajor, MyMinsMinor, MyMinsBuild FROM MyMinsCompatibleVersions WHERE MyMinsMajor = " + ma + " AND MyMinsMinor = " + mi + " AND MyMinsBuild = " + bu;
+                        if (cmd.ExecuteScalar() == null)
+                        {
+                            MessageBox.Show("Your mineral collection database is not compatible with this version(" + ma + "." + mi + "." + bu + ") of MyMins. Please install a later version of the program.", "Newer database detected.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+                conn.Close();
+            }
+
+        }
+        
         // Adds Data from a ComboBox control(and optionally any specified related ComboBox controls) to the DataSet.
         // Note: ComboBoxes used here require DataSource, DisplayMember, and ValueMember properties to be set correctly.
         // Also, most but not all need auto-complete as well.
@@ -277,18 +347,40 @@ namespace mymins
                 this.Width = wid;
                 this.Height = hei;
                 flowLayoutPanelMain1.FlowDirection = FlowDirection.LeftToRight;
-                // The following causes the Exposure panel's visibility to take effect immediately.
-                contactTypeComboBox_SelectedIndexChanged(contactTypeComboBox, null);
 
             }
 
         }
 
+        // Shows/Hides most controls, and related acquDataGridView columns.
         private void layoutTreeViewAfterCheck(object sender, TreeViewEventArgs e)
         {
             if (e.Node.Tag != null)
             {
                 LayoutSettings.Default[e.Node.Tag.ToString()] = e.Node.Checked;
+                switch (e.Node.Tag.ToString())
+                {
+                    case "visPanelAcquTo":
+                        acquDataGridView.Columns["To"].Visible = (bool)LayoutSettings.Default["visPanelAcquTo"];
+                        break;
+                    case "visPanelAcquPrice":
+                        acquDataGridView.Columns["Price"].Visible = (bool)LayoutSettings.Default["visPanelAcquPrice"];
+                        break;
+                    case "visPanelAcquType":
+                        acquDataGridView.Columns["Type"].Visible = (bool)LayoutSettings.Default["visPanelAcquType"];
+                        break;
+                    case "visPanelAcquExposure":
+                        acquDataGridView.Columns["Exposure"].Visible = (bool)LayoutSettings.Default["visPanelAcquExposure"];
+                        // Update visibility of locale related panels.
+                        contactTypeComboBox_SelectedIndexChanged(contactTypeComboBox, null);
+                        break;
+                    case "visFlowLayoutPanelExpoEdit":
+                        contactTypeComboBox_SelectedIndexChanged(contactTypeComboBox, null);
+                        break;
+                    case "visPanelConMindatID":
+                        contactTypeComboBox_SelectedIndexChanged(contactTypeComboBox, null);
+                        break;
+                }
             }
 
         }
@@ -319,9 +411,42 @@ namespace mymins
             }
         }
 
+        private void helpToolStripButton_Click(object sender, EventArgs e)
+        {
+            AboutBox1 ab = new AboutBox1();
+            ab.Show();
+        }
+
         private void Form1_Closing(object sender, FormClosingEventArgs e)
         {
             LayoutSettings.Default.Save();
+            DataSet datachanges = myminsDataSet.GetChanges();
+            if (datachanges != null)
+            {
+                int count = 0;
+                foreach (DataTable t in datachanges.Tables)
+                {
+                    count += t.Rows.Count;
+                }
+                var msboxresult = DialogResult.Yes;
+                msboxresult = MessageBox.Show("Save any unsaved changes?\nEstimated: " + count,
+                                              "Unsaved changes.",
+                                              MessageBoxButtons.YesNoCancel,
+                                              MessageBoxIcon.Information);
+                if (msboxresult == DialogResult.No)
+                {
+
+                }
+                else if (msboxresult == DialogResult.Cancel)
+                {
+                    e.Cancel = true;
+                }
+                else
+                {
+                    specBindingNavigatorSaveItem.PerformClick();
+                }
+
+            }
         }
 
         #endregion App
@@ -361,24 +486,22 @@ namespace mymins
                     toComboBox.Text = (String)acquDataGridView.Rows[0].Cells["To"].Value;
                 }
                 
-                if (acquDataGridView.Rows[0].Cells["Date"].Value.ToString() == "")
-                {
-                    acquireDateDateTimePicker.Format = DateTimePickerFormat.Custom;
-                }
-                else
-                {
-                    acquireDateDateTimePicker.Format = DateTimePickerFormat.Short;
-                    acquireDateDateTimePicker.Value = (DateTime)acquDataGridView.Rows[0].Cells["Date"].Value;
-                }
             }
             editComment(specCommentTextBox, currentRow);
-            currentRow["Units"] = Convert.ToBoolean(unitsComboBox.SelectedIndex);
-            currentRow["WeightUnits"] = Convert.ToBoolean(weightUnitsComboBox.SelectedIndex);
+            if (Convert.ToBoolean(currentRow["Units"]) != Convert.ToBoolean(unitsComboBox.SelectedIndex))
+            {
+                currentRow["Units"] = Convert.ToBoolean(unitsComboBox.SelectedIndex);
+            }
+            if (Convert.ToBoolean(currentRow["WeightUnits"]) != Convert.ToBoolean(weightUnitsComboBox.SelectedIndex))
+            {
+                currentRow["WeightUnits"] = Convert.ToBoolean(weightUnitsComboBox.SelectedIndex);
+            }
             userSpecIDTextBox.Focus();
         }
 
         private void specBindingNavigatorSaveItem_Click(object sender, EventArgs e)
         {
+            // Mins Edit and Exposure Edit DataSet saves are called by the focus change on the navigator click above.
             this.Validate();
             this.specBindingSource.EndEdit();
             fromComboBoxEnter(fromComboBox, null);
@@ -473,7 +596,7 @@ namespace mymins
             // TODO: A minID cannot contain certain characters such as O. This is to eliminate possible confusion, like when using the letter 'O' or number '0'.
         }
 
-        // Clicking Enter while in the ComboBox adds the mineral to the specimen.
+        // Pressing Enter while in the ComboBox adds the mineral to the specimen.
         private void minsComboBoxKeyDown(object sender, KeyEventArgs e)
         {
             if ((e.KeyCode == Keys.Enter) || (e.KeyCode == Keys.Return))
@@ -607,9 +730,51 @@ namespace mymins
             }
         }
 
-        private void minsBindingNavigatorClick(object sender, EventArgs e)
+        // Delete: Update mineral priorities for every specimen that uses the mineral about to be deleted. Add: Save any changes to the current mineral first.
+        private void minsBindingNavItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            minsComboBoxEnter(minsComboBox, null);
+            if (e.ClickedItem.Equals(minsBindingNavigatorDeleteItem))
+            {
+                var currentrow = (DataRowView)minsBindingSource.Current;
+                if (currentrow == null)
+                {
+                    return;
+                }
+                var query = from specmin in myminsDataSet.SpecMins.Where(r => r.MinsID == (int)currentrow["MinsID"])
+                            select new
+                            {
+                                specmin.SpecID
+                            };
+                var affectedSpecs = query.Distinct().ToList();
+                var msgresult = MessageBox.Show("This mineral is used by " + affectedSpecs.Count.ToString() + " specimens. Are you sure you want to delete it?", "Delete mineral?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (msgresult == DialogResult.No)
+                {
+                    return;
+                }
+                foreach (var spec in affectedSpecs)
+                {
+                    var specMinList = from specmin in myminsDataSet.SpecMins
+                                 where specmin.SpecID == spec.SpecID
+                                 orderby specmin.MinsPriority
+                                 select specmin;
+                    short count = 0;
+                    foreach (var row in specMinList)
+                    {
+                        if (row.MinsID != (int)currentrow["MinsID"])
+                        {
+                            count++;
+                            if (row.MinsPriority != count)
+                            {
+                                row.MinsPriority = count;
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                minsEdit_Leave(minsComboBox, null);
+            }
         }
 
         private void minsBindingNavigatorAddNewItem_Click(object sender, EventArgs e)
@@ -632,11 +797,16 @@ namespace mymins
 
         }
 
-        // Saves MinsType to the current mineral before changing the mineral in the minsCombobox.
-        private void minsComboBoxEnter(object sender, EventArgs e)
+        // Save changes to a mineral.
+        private void minsEdit_Leave(object sender, EventArgs e)
         {
+            this.Validate();
             var currentRow = (DataRowView)minsBindingSource.Current;
-            currentRow["MinsTypeID"] = minsTypeComboBox.SelectedValue;
+            if (currentRow["MinsTypeID"] != minsTypeComboBox.SelectedValue)
+            {
+                currentRow["MinsTypeID"] = minsTypeComboBox.SelectedValue;
+            }
+            minsBindingSource.EndEdit();
         }
 
         private void minsNameTextBoxValidating(object sender, CancelEventArgs e)
@@ -758,7 +928,7 @@ namespace mymins
 
         #region Contact
 
-        // Save Exposure, delete Comment if Contact deleted, save ComboBox values.
+        // Save Exposure, delete a Contact's Comment if the Contact is deleted, save ComboBox values.
         private void contactBindingNavigatorItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             flowLayoutPanelExpoEditLeave(flowLayoutPanelExpoEdit, null);
@@ -913,8 +1083,6 @@ namespace mymins
         // Controls visibility of Locale related controls.
         private void contactTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            flowLayoutPanelExpoEdit.Visible = false;
-            panelConMindatID.Visible = false;
             if ((byte?)contactTypeComboBox.SelectedValue == conTypeLocale)
             {
                 if ((bool)LayoutSettings.Default["visFlowLayoutPanelExpoEdit"])
@@ -925,6 +1093,16 @@ namespace mymins
                 {
                     panelConMindatID.Visible = true;
                 }
+                if ((bool)LayoutSettings.Default["visPanelAcquExposure"])
+                {
+                    panelAcquExposure.Visible = true;
+                }
+            }
+            else
+            {
+                flowLayoutPanelExpoEdit.Visible = false;
+                panelConMindatID.Visible = false;
+                panelAcquExposure.Visible = false;
             }
         }
 
@@ -938,8 +1116,10 @@ namespace mymins
 
         private void flowLayoutPanelExpoEditLeave(object sender, EventArgs e)
         {
+            var currentRow = (DataRowView)exposureBindingSource.Current;
             if (expoNameTextBox.Text != "")
             {
+                this.Validate();
                 exposureBindingSource.EndEdit();
             }
             else
@@ -949,59 +1129,21 @@ namespace mymins
 
         }
 
-        // Saves ExposureDate to the current record. 
+        // Disallow blank exposure names.
         private void expoBindingNavigatorItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            // The DateTimePicker needs to loose focus for the typed value to take effect.
-            expoNameTextBox.Focus();
             var currentRow = (DataRowView)exposureBindingSource.Current;
             if (currentRow != null)
             {
-                if (expoDateTimePicker.Format == DateTimePickerFormat.Custom)
+                if (expoNameTextBox.Text == "")
                 {
-                    currentRow["ExposureDate"] = DBNull.Value;
-                }
-                else
-                {
-                    currentRow["ExposureDate"] = expoDateTimePicker.Value;
-                }
-            }
-
-        }
-
-        // Set Date format
-        private void exposureBindingSourcePositionChanged(object sender, EventArgs e)
-        {
-            expoDateTimePicker.Format = DateTimePickerFormat.Custom;
-            if (exposureBindingSource.Current != null)
-            {
-                var currentrow = (DataRowView)exposureBindingSource.Current;
-                if (currentrow["ExposureDate"] != DBNull.Value)
-                {
-                    expoDateTimePicker.Format = DateTimePickerFormat.Short;
+                    expoNameTextBox.DataBindings[0].ReadValue();
+                    if (expoNameTextBox.Text == "")
+                    {
+                        currentRow.CancelEdit();
+                    }
                 }
             }
-         }
-
-        // DateTimePicker has it's Format property set to Custom and the CustomFormat property set to " ".
-        // This clears the display in the control to indicate no date will be entered. Related code will translate this to null.
-        private void dateTimePickerKeyDown(object sender, KeyEventArgs e)
-        {
-            var picker = (DateTimePicker)sender;
-            if ((e.KeyCode == Keys.Delete) || (e.KeyCode == Keys.Back))
-            {
-                picker.Format = DateTimePickerFormat.Custom;
-            }
-            else if (picker.Format != DateTimePickerFormat.Short)
-            {
-                picker.Format = DateTimePickerFormat.Short;
-            }
-        }
-
-        private void dateTimePickerCloseUp(object sender, EventArgs e)
-        {
-            var picker = (DateTimePicker)sender;
-            picker.Format = DateTimePickerFormat.Short;
         }
 
         #endregion Contact
@@ -1013,31 +1155,63 @@ namespace mymins
         private void fromComboBoxEnter(object sender, EventArgs e)
         {
             var currentRow = (DataRowView)contactBindingSource.Current;
-            currentRow["CountryID"] = DBNull.Value;
+            
             if (countryComboBox.Text != "")
             {
                 addData(countryComboBox);
-                currentRow["CountryID"] = countryComboBox.SelectedValue;
+                if (currentRow["CountryID"] != countryComboBox.SelectedValue)
+                {
+                    currentRow["CountryID"] = countryComboBox.SelectedValue;
+                }
             }
-            currentRow["StateID"] = DBNull.Value;
+            else if (currentRow["CountryID"] != DBNull.Value)
+            {
+                currentRow["CountryID"] = DBNull.Value;
+            }
+            
             if (stateComboBox.Text != "")
             {
                 addData(stateComboBox);
-                currentRow["StateID"] = stateComboBox.SelectedValue;
+                if (currentRow["StateID"] != stateComboBox.SelectedValue)
+                {
+                    currentRow["StateID"] = stateComboBox.SelectedValue;
+                }
             }
-            currentRow["CountyID"] = DBNull.Value;
+            else if (currentRow["StateID"] != DBNull.Value)
+            {
+                currentRow["StateID"] = DBNull.Value;
+            }
+            
             if (countyComboBox.Text != "")
             {
                 addData(countyComboBox);
-                currentRow["CountyID"] = countyComboBox.SelectedValue;
+                if (currentRow["CountyID"] != countyComboBox.SelectedValue)
+                {
+                    currentRow["CountyID"] = countyComboBox.SelectedValue;
+                }
             }
-            currentRow["CityID"] = DBNull.Value;
+            else if (currentRow["CountyID"] != DBNull.Value)
+            {
+                currentRow["CountyID"] = DBNull.Value;
+            }
+            
             if (cityComboBox.Text != "")
             {
                 addData(cityComboBox);
-                currentRow["CityID"] = cityComboBox.SelectedValue;
+                if (currentRow["CityID"] != cityComboBox.SelectedValue)
+                {
+                    currentRow["CityID"] = cityComboBox.SelectedValue;
+                }
             }
-            currentRow["ContactTypeID"] = contactTypeComboBox.SelectedValue;
+            else if (currentRow["CityID"] != DBNull.Value)
+            {
+                currentRow["CityID"] = DBNull.Value;
+            }
+
+            if (currentRow["ContactTypeID"] != contactTypeComboBox.SelectedValue)
+            {
+                currentRow["ContactTypeID"] = contactTypeComboBox.SelectedValue;
+            }
             editComment(contactCommentTextBox, currentRow);
             
         }
@@ -1047,13 +1221,18 @@ namespace mymins
         {
             var cbx = (ComboBox)sender;
             cbxDupIndx = cbx.SelectedIndex;
+            cbxLeave = true;
         }
 
         // Allows adding a new Contact, and adding a null Contact to the Acquisitions.
         private void contactComboBoxValidating(object sender, CancelEventArgs e)
         {
             var cbx = (ComboBox)sender;
-            cbx.SelectedIndex = cbxDupIndx;
+            if (cbxLeave)
+            {
+                cbx.SelectedIndex = cbxDupIndx;
+                cbxLeave = false;
+            }
             var cbxBs = (BindingSource)cbx.DataSource;
             var currentRow = (DataRowView)cbxBs.Current;
             var msboxresult = DialogResult.None;
@@ -1102,17 +1281,6 @@ namespace mymins
                     myminsDataSet.CommentRow currentComRow = myminsDataSet.Comment.FindByCommentID((int)currentRow["CommentID"]);
                     contactCommentTextBox.Text = currentComRow["Comment"].ToString();
                 }
-                if (Convert.ToInt32(currentRow["ContactTypeID"]) == conTypeLocale)
-                {
-                    exposureNameLabel.Visible = true;
-                    exposureNameComboBox.Visible = true;
-                }
-                else
-                {
-                    exposureNameLabel.Visible = false;
-                    exposureNameComboBox.Visible = false;
-                }
-
             }
             else if (contactBindingSource.Count == 0)
             {
@@ -1128,17 +1296,14 @@ namespace mymins
             {
                 acquireTypeComboBox.Text = this.acquTypePurchase;
             }
-            else
+            var currentFromRow = (DataRowView)contactBindingSource.Current;
+            var currentToRow = (DataRowView)toContactBindingSource.Current;
+            if ((currentFromRow != null) && (currentToRow != null) && (currentFromRow["ContactName"].ToString() == fromComboBox.Text) && (currentToRow["ContactName"].ToString() == toComboBox.Text))
             {
-                var currentFromRow = (DataRowView)contactBindingSource.Current;
-                var currentToRow = (DataRowView)toContactBindingSource.Current;
-                if ((currentFromRow != null) && (currentToRow != null) && (currentFromRow["ContactName"].ToString() == fromComboBox.Text) && (currentToRow["ContactName"].ToString() == toComboBox.Text))
+                // if fromContact is a locale and toContact is 'Self' then acquireType is 'Self Collected'.
+                if (((byte)currentFromRow["ContactTypeID"] == conTypeLocale) && (currentToRow["ContactName"].ToString() == this.collector))
                 {
-                    // if fromContact is a locale and toContact is 'Self' then acquireType is 'Self Collected'.
-                    if (((byte)currentFromRow["ContactTypeID"] == conTypeLocale) && (currentToRow["ContactName"].ToString() == this.collector))
-                    {
-                        acquireTypeComboBox.Text = this.acquTypeSelfCollected;
-                    }
+                    acquireTypeComboBox.Text = this.acquTypeSelfCollected;
                 }
             }
             acquireTypeComboBox.SelectAll();
@@ -1146,6 +1311,7 @@ namespace mymins
 
         private void acquAddButton_Click(object sender, EventArgs e)
         {
+            fromComboBoxEnter(fromComboBox, null);
             var acquisitionRowAdd = myminsDataSet.Acquisition.NewAcquisitionRow();
             var currentSpecRow = (DataRowView)specBindingSource.Current;
             acquisitionRowAdd.SpecID = (int)currentSpecRow["SpecID"];
@@ -1183,10 +1349,20 @@ namespace mymins
                 contactBindingSource.Position = contactBindingSource.Find("ContactID", (int)currentToConRow["ContactID"]);
                 toComboBox.Text = "";
             }
-            if (acquireDateDateTimePicker.Format != DateTimePickerFormat.Custom)
+            if (acquDatePartsBox.TextMonth != "")
             {
-                acquisitionRowAdd.AcquireDate = acquireDateDateTimePicker.Value.Date;
-                acquireDateDateTimePicker.Format = DateTimePickerFormat.Custom;
+                acquisitionRowAdd["AcquireMonth"] = short.Parse(acquDatePartsBox.TextMonth);
+                acquDatePartsBox.TextMonth = "";
+            }
+            if (acquDatePartsBox.TextDay != "")
+            {
+                acquisitionRowAdd["AcquireDay"] = short.Parse(acquDatePartsBox.TextDay);
+                acquDatePartsBox.TextDay = "";
+            }
+            if (acquDatePartsBox.TextYear != "")
+            {
+                acquisitionRowAdd["AcquireYear"] = short.Parse(acquDatePartsBox.TextYear);
+                acquDatePartsBox.TextYear = "";
             }
             if (acquirePriceTextBox.Text != "")
             {
@@ -1251,12 +1427,22 @@ namespace mymins
                         {
                             From = (fcon == null ? String.Empty : fcon.ContactName),
                             To = (tcon == null ? String.Empty : tcon.ContactName),
-                            Date = acqu.Row["AcquireDate"],
+                            Date =  ((acqu.Row["AcquireMonth"] == DBNull.Value) ? "__" : acqu.Row["AcquireMonth"].ToString()) + "/" +
+                                    ((acqu.Row["AcquireDay"] == DBNull.Value) ? "__" : acqu.Row["AcquireDay"].ToString()) + "/" +
+                                    ((acqu.Row["AcquireYear"] == DBNull.Value) ? "____" : acqu.Row["AcquireYear"].ToString()),
                             Price = acqu.Row["AcquirePrice"],
                             Type = (acqutype == null ? String.Empty : acqutype.AcquireTypeName),
                             Exposure = (expo == null ? String.Empty : expo.ExposureName),
                         };
             acquDataGridView.DataSource = query.ToList();
+            if (query.Any(r => r.Exposure != String.Empty))
+            {
+                acquDataGridView.Columns["Exposure"].Visible = true;
+            }
+            else
+            {
+                acquDataGridView.Columns["Exposure"].Visible = false;
+            }
         }
 
         private void acquViewCellEnter(object sender, DataGridViewCellEventArgs e)
@@ -1269,7 +1455,6 @@ namespace mymins
         }
 
         #endregion Acquisitions
-
 
     }
 }

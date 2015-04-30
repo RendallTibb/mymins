@@ -59,5 +59,26 @@ namespace mymins.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CREATE TABLE [Times] (
+        ///    [TimeID]        INTEGER PRIMARY KEY,
+        ///    [OtherTime]     nvarchar(20) NOT NULL );
+        ///CREATE TABLE [State] (
+        ///    [StateID]       INTEGER PRIMARY KEY,
+        ///    [StateName]     nvarchar(50) NOT NULL );
+        ///CREATE TABLE [SpecMins] (
+        ///    [Id]            INTEGER PRIMARY KEY,
+        ///    [SpecID]        integer NOT NULL,
+        ///    [MinsID]	    integer NOT NULL,
+        ///    [MinsPriority]  smallint NOT NULL,
+        ///    FOREIGN KEY ([SpecID])	REFERENCES [Spec]([SpecID]),
+        ///    FOREIGN KEY ([MinsID])	REFERENCES [Mins]([M [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string v1_0_0 {
+            get {
+                return ResourceManager.GetString("v1_0_0", resourceCulture);
+            }
+        }
     }
 }

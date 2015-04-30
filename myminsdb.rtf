@@ -26,14 +26,14 @@ Some reference tables are shared by other tables to help save space but may incu
   Artificial: Unnaturally created specimen.
   <CommentID>
 
-<> Title: For the first featured text displayed with a mineral. User could choose what fields to include. If the user wishes to use a custom-made title, they could create a new member in a field such as Synonym or Group and then use that field. e.g., create group 'fossil' and choose to show that group as the title. Perhaps multiple minerals could be chosen from a shortcut list of minerals that pertain to that specific specimen, but user could also choose minerals/groups that don't pertain to that specimen.
+<> Title: For the first featured text displayed with a mineral. User could choose what fields to include. If the user wishes to use a custom-made title, they could create a new member in a field such as Synonym or Group and then use that field. e.g., create group 'fossil' and choose to show that group as the title. Perhaps multiple minerals could be chosen from a shortcut list of minerals that pertain to that specific specimen, but a user could also choose minerals/groups that don't pertain to that specimen.
 
 <Mins> 
   Mindat ID: For direct web-page lookup. The ID may also work for gemdat.org.
   <MinsTypes>
     IMA: International Mineral Association approved mineral.
     Mixture: A thing that is not IMA, Variety, or Synonym.
-    Variety: A variety of an IMA, Other, or Variety.
+    Variety: A variety of an IMA, Mixture, or Variety.
     Synonym: Another name for any of the 3 above fields.
     Series: Minerals with similar features(formula? crystal structure?)
     Group: Minerals related by less specific means than series.
@@ -52,18 +52,18 @@ Info about Mindat's format for Approved Minerals, Synonyms, Varieties, Series, M
   ImagePriority: Order in which images are shown.
 <ContactImgs> Like SpecImgs but for all types of contacts.
 
+<Times> May be a description of a period of time but can be used however it is needed, e.g., fall, winter, spring, summer, year-round, closed, and Inquire. 
+
 <Acquisition> Current and previous. This will also keep track of relations/affiliations between shops, dealers, locales, etc.
   <SpecID> Specimens can have a history of multiple acquisitions.
   ToContactID: Who acquired the mineral.
   FromContactID: Who it was acquired from.
   <AcquireType> collected, purchased(single), purchased(bulk), flat, field trip, mine dirt, trade, etc.
-  AcquireDate: Date it was acquired by ToContactID.
+  AcquireDate(Day/Month/Year): Date it was acquired by ToContactID.
   AcquirePrice: Price of the specimen when it was acquired on AcquireDate.
   <ExposureID> Lists where(e.g., south dumps, quarry wall, Pocket 83, Brian pit) at a locale that a specimen was found or originated from. This includes the date of the exposure was created/excavated. Considering moving this to the Spec table.
-  <AvailableID> Indicates the affiliation status of the ToContact and FromContact at the time of acquisition.
 
 <Availability> uses data in the following tables. The same AvailableID can be used by multiple sources. If only one of those sources needed to be edited, then it could be assigned a new availability ID, or an existing one that matches.
-Date fields: The program may include an enumeration for fall, winter, spring, summer, year-round, closed, and Inquire.
   <OpenHours> Hours during the day when a place is open. Some contacts may have the same hours, so there will be some duplication for different Available IDs.
     <Days> Allows selecting individual or multiple days of the week and reusing selections.
 
@@ -78,7 +78,7 @@ Please give reminder to anyone publicizing parts of this database, to do so with
     Club: A mineral club.
     Person: A person that is not a dealer.
     OtherOrganization: Such as a national forest or state agency.
-  <Address>
+  Address:
   <City>
   <County>
   <State>(or region)
@@ -90,7 +90,6 @@ Please give reminder to anyone publicizing parts of this database, to do so with
   Web:
   <Comment>
   <Available>
+  <MindatID> May only be used for locales.
 
 <> May want to add relations to countries, cities, states, etc. The program could also use an external data source(website api) or import from another database.
-
-<ContactMindat> Mindat locales have IDs that link to their pages. So this table is just for those. Possibly Mindat could host other contact sources as well?

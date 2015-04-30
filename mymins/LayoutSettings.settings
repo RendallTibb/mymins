@@ -125,10 +125,13 @@
     <Setting Name="visFlowLayoutPanelExpoEdit" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="visExpoDatePartsBox" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
     <Setting Name="visPanelAcquTo" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="visPanelAcquDate" Type="System.Boolean" Scope="User">
+    <Setting Name="visAcquDatePartsBox" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="visPanelAcquPrice" Type="System.Boolean" Scope="User">

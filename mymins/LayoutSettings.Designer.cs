@@ -518,6 +518,18 @@ namespace mymins {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool visExpoDatePartsBox {
+            get {
+                return ((bool)(this["visExpoDatePartsBox"]));
+            }
+            set {
+                this["visExpoDatePartsBox"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool visPanelAcquTo {
             get {
                 return ((bool)(this["visPanelAcquTo"]));
@@ -530,12 +542,12 @@ namespace mymins {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool visPanelAcquDate {
+        public bool visAcquDatePartsBox {
             get {
-                return ((bool)(this["visPanelAcquDate"]));
+                return ((bool)(this["visAcquDatePartsBox"]));
             }
             set {
-                this["visPanelAcquDate"] = value;
+                this["visAcquDatePartsBox"] = value;
             }
         }
         

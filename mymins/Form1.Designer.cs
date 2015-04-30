@@ -43,7 +43,6 @@
             System.Windows.Forms.Label acquirePriceLabel;
             System.Windows.Forms.Label weightLabel;
             System.Windows.Forms.Label weightUnitsLabel;
-            System.Windows.Forms.Label acquireDateLabel;
             System.Windows.Forms.Label gPSlatLabel;
             System.Windows.Forms.Label gPSlonLabel;
             System.Windows.Forms.Label phoneLabel;
@@ -114,8 +113,10 @@
             System.Windows.Forms.TreeNode treeNode35 = new System.Windows.Forms.TreeNode("Web");
             System.Windows.Forms.TreeNode treeNode36 = new System.Windows.Forms.TreeNode("Comment");
             System.Windows.Forms.TreeNode treeNode37 = new System.Windows.Forms.TreeNode("MindatID");
-            System.Windows.Forms.TreeNode treeNode38 = new System.Windows.Forms.TreeNode("Exposure Edit Panel");
-            System.Windows.Forms.TreeNode treeNode39 = new System.Windows.Forms.TreeNode("From Contact +/-", new System.Windows.Forms.TreeNode[] {
+            System.Windows.Forms.TreeNode treeNode38 = new System.Windows.Forms.TreeNode("Exposure Date");
+            System.Windows.Forms.TreeNode treeNode39 = new System.Windows.Forms.TreeNode("Exposure Edit Panel", new System.Windows.Forms.TreeNode[] {
+            treeNode38});
+            System.Windows.Forms.TreeNode treeNode40 = new System.Windows.Forms.TreeNode("From Contact +/-", new System.Windows.Forms.TreeNode[] {
             treeNode23,
             treeNode24,
             treeNode25,
@@ -131,20 +132,20 @@
             treeNode35,
             treeNode36,
             treeNode37,
-            treeNode38});
-            System.Windows.Forms.TreeNode treeNode40 = new System.Windows.Forms.TreeNode("To");
-            System.Windows.Forms.TreeNode treeNode41 = new System.Windows.Forms.TreeNode("Date");
-            System.Windows.Forms.TreeNode treeNode42 = new System.Windows.Forms.TreeNode("Price");
-            System.Windows.Forms.TreeNode treeNode43 = new System.Windows.Forms.TreeNode("Type");
-            System.Windows.Forms.TreeNode treeNode44 = new System.Windows.Forms.TreeNode("Exposure");
-            System.Windows.Forms.TreeNode treeNode45 = new System.Windows.Forms.TreeNode("Acquisition Grid");
-            System.Windows.Forms.TreeNode treeNode46 = new System.Windows.Forms.TreeNode("Acquisitions", new System.Windows.Forms.TreeNode[] {
-            treeNode40,
+            treeNode39});
+            System.Windows.Forms.TreeNode treeNode41 = new System.Windows.Forms.TreeNode("To");
+            System.Windows.Forms.TreeNode treeNode42 = new System.Windows.Forms.TreeNode("Date");
+            System.Windows.Forms.TreeNode treeNode43 = new System.Windows.Forms.TreeNode("Price");
+            System.Windows.Forms.TreeNode treeNode44 = new System.Windows.Forms.TreeNode("Type");
+            System.Windows.Forms.TreeNode treeNode45 = new System.Windows.Forms.TreeNode("Exposure");
+            System.Windows.Forms.TreeNode treeNode46 = new System.Windows.Forms.TreeNode("Acquisition Grid");
+            System.Windows.Forms.TreeNode treeNode47 = new System.Windows.Forms.TreeNode("Acquisitions", new System.Windows.Forms.TreeNode[] {
             treeNode41,
             treeNode42,
             treeNode43,
             treeNode44,
-            treeNode45});
+            treeNode45,
+            treeNode46});
             this.label1 = new System.Windows.Forms.Label();
             this.minsComboBox = new System.Windows.Forms.ComboBox();
             this.minsBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -171,6 +172,7 @@
             this.specBindingNavigatorSaveItem = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonLayout = new System.Windows.Forms.ToolStripButton();
+            this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.specMinsListView = new System.Windows.Forms.ListView();
             this.minsTypeComboBox = new System.Windows.Forms.ComboBox();
             this.minsTypesBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -209,7 +211,6 @@
             this.imagePriorityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.commentIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.acquisitionBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.acquireDateDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.countyComboBox = new System.Windows.Forms.ComboBox();
             this.countyBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label4 = new System.Windows.Forms.Label();
@@ -327,16 +328,14 @@
             this.panelExpoName = new System.Windows.Forms.Panel();
             this.label19 = new System.Windows.Forms.Label();
             this.expoNameTextBox = new System.Windows.Forms.TextBox();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.expoDateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.label20 = new System.Windows.Forms.Label();
+            this.expoDatePartsBox = new mymins.DatePartsBox();
             this.panelAcquFrom = new System.Windows.Forms.Panel();
             this.panelAcquTo = new System.Windows.Forms.Panel();
-            this.panelAcquDate = new System.Windows.Forms.Panel();
             this.panelAcquExposure = new System.Windows.Forms.Panel();
             this.panelAcquPrice = new System.Windows.Forms.Panel();
             this.panelAcquType = new System.Windows.Forms.Panel();
             this.flowLayoutPanelAcquisition = new System.Windows.Forms.FlowLayoutPanel();
+            this.acquDatePartsBox = new mymins.DatePartsBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panelSpecDetails = new System.Windows.Forms.Panel();
             this.panelFromContact = new System.Windows.Forms.Panel();
@@ -345,10 +344,10 @@
             this.labelConPlus = new System.Windows.Forms.Label();
             this.flowLayoutPanelSpecDetailsOuter = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanelFromContactOuter = new System.Windows.Forms.FlowLayoutPanel();
-            this.layoutTreeView = new mymins.TreeViewCustom();
             this.flowLayoutPanelMain1 = new System.Windows.Forms.FlowLayoutPanel();
             this.tableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.layoutTreeView = new mymins.TreeViewCustom();
             specimenIDLabel = new System.Windows.Forms.Label();
             minIDLabel = new System.Windows.Forms.Label();
             commentIDLabel = new System.Windows.Forms.Label();
@@ -363,7 +362,6 @@
             acquirePriceLabel = new System.Windows.Forms.Label();
             weightLabel = new System.Windows.Forms.Label();
             weightUnitsLabel = new System.Windows.Forms.Label();
-            acquireDateLabel = new System.Windows.Forms.Label();
             gPSlatLabel = new System.Windows.Forms.Label();
             gPSlonLabel = new System.Windows.Forms.Label();
             phoneLabel = new System.Windows.Forms.Label();
@@ -441,10 +439,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.expoBindingNavigator)).BeginInit();
             this.expoBindingNavigator.SuspendLayout();
             this.panelExpoName.SuspendLayout();
-            this.panel4.SuspendLayout();
             this.panelAcquFrom.SuspendLayout();
             this.panelAcquTo.SuspendLayout();
-            this.panelAcquDate.SuspendLayout();
             this.panelAcquExposure.SuspendLayout();
             this.panelAcquPrice.SuspendLayout();
             this.panelAcquType.SuspendLayout();
@@ -585,15 +581,6 @@
             weightUnitsLabel.TabIndex = 235;
             weightUnitsLabel.Text = "wUnits";
             // 
-            // acquireDateLabel
-            // 
-            acquireDateLabel.AutoSize = true;
-            acquireDateLabel.Location = new System.Drawing.Point(-3, 0);
-            acquireDateLabel.Name = "acquireDateLabel";
-            acquireDateLabel.Size = new System.Drawing.Size(30, 13);
-            acquireDateLabel.TabIndex = 305;
-            acquireDateLabel.Text = "Date";
-            // 
             // gPSlatLabel
             // 
             gPSlatLabel.AutoSize = true;
@@ -696,7 +683,6 @@
             this.minsComboBox.Size = new System.Drawing.Size(121, 21);
             this.minsComboBox.TabIndex = 3;
             this.minsComboBox.ValueMember = "MinsID";
-            this.minsComboBox.Enter += new System.EventHandler(this.minsComboBoxEnter);
             this.minsComboBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.minsComboBoxKeyDown);
             // 
             // minsBindingSource
@@ -793,7 +779,8 @@
             this.bindingNavigatorDeleteItem,
             this.specBindingNavigatorSaveItem,
             this.toolStripSeparator1,
-            this.toolStripButtonLayout});
+            this.toolStripButtonLayout,
+            this.helpToolStripButton});
             this.specBindingNavigator.Location = new System.Drawing.Point(0, 0);
             this.specBindingNavigator.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
             this.specBindingNavigator.MoveLastItem = this.bindingNavigatorMoveLastItem;
@@ -916,6 +903,17 @@
             this.toolStripButtonLayout.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonLayout.Text = "Layout";
             this.toolStripButtonLayout.CheckStateChanged += new System.EventHandler(this.layoutCheckStateChanged);
+            // 
+            // helpToolStripButton
+            // 
+            this.helpToolStripButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.helpToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.helpToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("helpToolStripButton.Image")));
+            this.helpToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.helpToolStripButton.Name = "helpToolStripButton";
+            this.helpToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.helpToolStripButton.Text = "He&lp";
+            this.helpToolStripButton.Click += new System.EventHandler(this.helpToolStripButton_Click);
             // 
             // specMinsListView
             // 
@@ -1215,7 +1213,6 @@
             // 
             this.exposureBindingSource.DataMember = "FK_Exposure_Contact";
             this.exposureBindingSource.DataSource = this.contactBindingSource;
-            this.exposureBindingSource.PositionChanged += new System.EventHandler(this.exposureBindingSourcePositionChanged);
             // 
             // idDataGridViewTextBoxColumn
             // 
@@ -1259,17 +1256,6 @@
             this.acquisitionBindingSource.DataMember = "FK_Acquisition_Spec";
             this.acquisitionBindingSource.DataSource = this.specBindingSource;
             this.acquisitionBindingSource.ListChanged += new System.ComponentModel.ListChangedEventHandler(this.acquListChanged);
-            // 
-            // acquireDateDateTimePicker
-            // 
-            this.acquireDateDateTimePicker.CustomFormat = " ";
-            this.acquireDateDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.acquireDateDateTimePicker.Location = new System.Drawing.Point(33, 0);
-            this.acquireDateDateTimePicker.Name = "acquireDateDateTimePicker";
-            this.acquireDateDateTimePicker.Size = new System.Drawing.Size(99, 20);
-            this.acquireDateDateTimePicker.TabIndex = 43;
-            this.acquireDateDateTimePicker.CloseUp += new System.EventHandler(this.dateTimePickerCloseUp);
-            this.acquireDateDateTimePicker.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dateTimePickerKeyDown);
             // 
             // countyComboBox
             // 
@@ -1392,6 +1378,7 @@
             this.tableAdapterManager.SpecMinsTableAdapter = this.specMinsTableAdapter;
             this.tableAdapterManager.SpecTableAdapter = this.specTableAdapter;
             this.tableAdapterManager.StateTableAdapter = this.stateTableAdapter;
+            this.tableAdapterManager.TimesTableAdapter = null;
             this.tableAdapterManager.UpdateOrder = mymins.myminsDataSetTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
             // 
             // acquireTypeTableAdapter
@@ -1853,7 +1840,7 @@
             this.flowLayoutPanelSpecDetails.Controls.Add(this.panelSpecComment);
             this.flowLayoutPanelSpecDetails.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanelSpecDetails.Location = new System.Drawing.Point(6, 17);
-            this.flowLayoutPanelSpecDetails.MaximumSize = new System.Drawing.Size(524, 107);
+            this.flowLayoutPanelSpecDetails.MaximumSize = new System.Drawing.Size(1500, 107);
             this.flowLayoutPanelSpecDetails.Name = "flowLayoutPanelSpecDetails";
             this.flowLayoutPanelSpecDetails.Size = new System.Drawing.Size(501, 105);
             this.flowLayoutPanelSpecDetails.TabIndex = 32;
@@ -2007,7 +1994,7 @@
             this.flowLayoutPanelSpecMins.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanelSpecMins.Location = new System.Drawing.Point(3, 0);
             this.flowLayoutPanelSpecMins.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-            this.flowLayoutPanelSpecMins.MaximumSize = new System.Drawing.Size(1000, 107);
+            this.flowLayoutPanelSpecMins.MaximumSize = new System.Drawing.Size(1500, 107);
             this.flowLayoutPanelSpecMins.Name = "flowLayoutPanelSpecMins";
             this.flowLayoutPanelSpecMins.Size = new System.Drawing.Size(641, 89);
             this.flowLayoutPanelSpecMins.TabIndex = 2;
@@ -2068,6 +2055,7 @@
             this.flowLayoutPanelMinEdit.Size = new System.Drawing.Size(278, 83);
             this.flowLayoutPanelMinEdit.TabIndex = 8;
             this.flowLayoutPanelMinEdit.Visible = global::mymins.LayoutSettings.Default.visFlowLayoutPanelMinEdit;
+            this.flowLayoutPanelMinEdit.Leave += new System.EventHandler(this.minsEdit_Leave);
             // 
             // panelMinEditAddDel
             // 
@@ -2103,7 +2091,7 @@
             this.minsBindingNavigator.Size = new System.Drawing.Size(65, 20);
             this.minsBindingNavigator.TabIndex = 362;
             this.minsBindingNavigator.Text = "bindingNavigator1";
-            this.minsBindingNavigator.Click += new System.EventHandler(this.minsBindingNavigatorClick);
+            this.minsBindingNavigator.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.minsBindingNavItemClicked);
             // 
             // minsBindingNavigatorAddNewItem
             // 
@@ -2344,9 +2332,9 @@
             this.flowLayoutPanelFromContact.Controls.Add(this.flowLayoutPanelExpoEdit);
             this.flowLayoutPanelFromContact.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanelFromContact.Location = new System.Drawing.Point(7, 17);
-            this.flowLayoutPanelFromContact.MaximumSize = new System.Drawing.Size(484, 162);
+            this.flowLayoutPanelFromContact.MaximumSize = new System.Drawing.Size(1500, 162);
             this.flowLayoutPanelFromContact.Name = "flowLayoutPanelFromContact";
-            this.flowLayoutPanelFromContact.Size = new System.Drawing.Size(483, 160);
+            this.flowLayoutPanelFromContact.Size = new System.Drawing.Size(485, 160);
             this.flowLayoutPanelFromContact.TabIndex = 62;
             // 
             // flowLayoutPanelExpoEdit
@@ -2356,12 +2344,12 @@
             this.flowLayoutPanelExpoEdit.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.flowLayoutPanelExpoEdit.Controls.Add(this.panelExpoEditAddDel);
             this.flowLayoutPanelExpoEdit.Controls.Add(this.panelExpoName);
-            this.flowLayoutPanelExpoEdit.Controls.Add(this.panel4);
+            this.flowLayoutPanelExpoEdit.Controls.Add(this.expoDatePartsBox);
             this.flowLayoutPanelExpoEdit.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanelExpoEdit.Location = new System.Drawing.Point(320, 52);
             this.flowLayoutPanelExpoEdit.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.flowLayoutPanelExpoEdit.Name = "flowLayoutPanelExpoEdit";
-            this.flowLayoutPanelExpoEdit.Size = new System.Drawing.Size(160, 82);
+            this.flowLayoutPanelExpoEdit.Size = new System.Drawing.Size(165, 81);
             this.flowLayoutPanelExpoEdit.TabIndex = 77;
             this.flowLayoutPanelExpoEdit.Enter += new System.EventHandler(this.flowLayoutPanelExpoEditEnter);
             this.flowLayoutPanelExpoEdit.Leave += new System.EventHandler(this.flowLayoutPanelExpoEditLeave);
@@ -2468,9 +2456,10 @@
             // 
             this.panelExpoName.Controls.Add(this.label19);
             this.panelExpoName.Controls.Add(this.expoNameTextBox);
-            this.panelExpoName.Location = new System.Drawing.Point(3, 29);
+            this.panelExpoName.Location = new System.Drawing.Point(3, 28);
+            this.panelExpoName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 3);
             this.panelExpoName.Name = "panelExpoName";
-            this.panelExpoName.Size = new System.Drawing.Size(150, 20);
+            this.panelExpoName.Size = new System.Drawing.Size(155, 20);
             this.panelExpoName.TabIndex = 79;
             // 
             // label19
@@ -2490,35 +2479,25 @@
             this.expoNameTextBox.Size = new System.Drawing.Size(117, 20);
             this.expoNameTextBox.TabIndex = 39;
             // 
-            // panel4
+            // expoDatePartsBox
             // 
-            this.panel4.Controls.Add(this.expoDateTimePicker);
-            this.panel4.Controls.Add(this.label20);
-            this.panel4.Location = new System.Drawing.Point(3, 55);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(150, 20);
-            this.panel4.TabIndex = 80;
-            // 
-            // expoDateTimePicker
-            // 
-            this.expoDateTimePicker.CustomFormat = " ";
-            this.expoDateTimePicker.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.exposureBindingSource, "ExposureDate", true));
-            this.expoDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.expoDateTimePicker.Location = new System.Drawing.Point(38, 0);
-            this.expoDateTimePicker.Name = "expoDateTimePicker";
-            this.expoDateTimePicker.Size = new System.Drawing.Size(112, 20);
-            this.expoDateTimePicker.TabIndex = 40;
-            this.expoDateTimePicker.CloseUp += new System.EventHandler(this.dateTimePickerCloseUp);
-            this.expoDateTimePicker.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dateTimePickerKeyDown);
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(-3, 0);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(30, 13);
-            this.label20.TabIndex = 244;
-            this.label20.Text = "Date";
+            this.expoDatePartsBox.AutoSize = true;
+            this.expoDatePartsBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.expoDatePartsBox.CheckedOther = false;
+            this.expoDatePartsBox.DataBindings.Add(new System.Windows.Forms.Binding("TextMonth", this.exposureBindingSource, "ExposureMonth", true));
+            this.expoDatePartsBox.DataBindings.Add(new System.Windows.Forms.Binding("TextDay", this.exposureBindingSource, "ExposureDay", true));
+            this.expoDatePartsBox.DataBindings.Add(new System.Windows.Forms.Binding("TextYear", this.exposureBindingSource, "ExposureYear", true));
+            this.expoDatePartsBox.DataBindings.Add(new System.Windows.Forms.Binding("Visible", global::mymins.LayoutSettings.Default, "visExpoDatePartsBox", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.expoDatePartsBox.Location = new System.Drawing.Point(3, 54);
+            this.expoDatePartsBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
+            this.expoDatePartsBox.Name = "expoDatePartsBox";
+            this.expoDatePartsBox.Size = new System.Drawing.Size(151, 23);
+            this.expoDatePartsBox.TabIndex = 81;
+            this.expoDatePartsBox.TextDay = "";
+            this.expoDatePartsBox.TextMonth = "";
+            this.expoDatePartsBox.TextYear = "";
+            this.expoDatePartsBox.Visible = global::mymins.LayoutSettings.Default.visExpoDatePartsBox;
+            this.expoDatePartsBox.VisibleOther = false;
             // 
             // panelAcquFrom
             // 
@@ -2540,27 +2519,14 @@
             this.panelAcquTo.TabIndex = 112;
             this.panelAcquTo.Visible = global::mymins.LayoutSettings.Default.visPanelAcquTo;
             // 
-            // panelAcquDate
-            // 
-            this.panelAcquDate.Controls.Add(acquireDateLabel);
-            this.panelAcquDate.Controls.Add(this.acquireDateDateTimePicker);
-            this.panelAcquDate.DataBindings.Add(new System.Windows.Forms.Binding("Visible", global::mymins.LayoutSettings.Default, "visPanelAcquDate", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.panelAcquDate.Location = new System.Drawing.Point(159, 3);
-            this.panelAcquDate.Name = "panelAcquDate";
-            this.panelAcquDate.Size = new System.Drawing.Size(137, 20);
-            this.panelAcquDate.TabIndex = 113;
-            this.panelAcquDate.Visible = global::mymins.LayoutSettings.Default.visPanelAcquDate;
-            // 
             // panelAcquExposure
             // 
             this.panelAcquExposure.Controls.Add(this.exposureNameLabel);
             this.panelAcquExposure.Controls.Add(this.exposureNameComboBox);
-            this.panelAcquExposure.DataBindings.Add(new System.Windows.Forms.Binding("Visible", global::mymins.LayoutSettings.Default, "visPanelAcquExposure", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.panelAcquExposure.Location = new System.Drawing.Point(302, 30);
+            this.panelAcquExposure.Location = new System.Drawing.Point(316, 30);
             this.panelAcquExposure.Name = "panelAcquExposure";
             this.panelAcquExposure.Size = new System.Drawing.Size(145, 21);
             this.panelAcquExposure.TabIndex = 116;
-            this.panelAcquExposure.Visible = global::mymins.LayoutSettings.Default.visPanelAcquExposure;
             // 
             // panelAcquPrice
             // 
@@ -2578,7 +2544,7 @@
             this.panelAcquType.Controls.Add(this.label8);
             this.panelAcquType.Controls.Add(this.acquireTypeComboBox);
             this.panelAcquType.DataBindings.Add(new System.Windows.Forms.Binding("Visible", global::mymins.LayoutSettings.Default, "visPanelAcquType", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.panelAcquType.Location = new System.Drawing.Point(302, 3);
+            this.panelAcquType.Location = new System.Drawing.Point(316, 3);
             this.panelAcquType.Name = "panelAcquType";
             this.panelAcquType.Size = new System.Drawing.Size(145, 21);
             this.panelAcquType.TabIndex = 115;
@@ -2590,7 +2556,7 @@
             this.flowLayoutPanelAcquisition.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.flowLayoutPanelAcquisition.Controls.Add(this.panelAcquFrom);
             this.flowLayoutPanelAcquisition.Controls.Add(this.panelAcquTo);
-            this.flowLayoutPanelAcquisition.Controls.Add(this.panelAcquDate);
+            this.flowLayoutPanelAcquisition.Controls.Add(this.acquDatePartsBox);
             this.flowLayoutPanelAcquisition.Controls.Add(this.panelAcquPrice);
             this.flowLayoutPanelAcquisition.Controls.Add(this.panelAcquType);
             this.flowLayoutPanelAcquisition.Controls.Add(this.panelAcquExposure);
@@ -2598,8 +2564,25 @@
             this.flowLayoutPanelAcquisition.Location = new System.Drawing.Point(66, 1);
             this.flowLayoutPanelAcquisition.MaximumSize = new System.Drawing.Size(1000, 55);
             this.flowLayoutPanelAcquisition.Name = "flowLayoutPanelAcquisition";
-            this.flowLayoutPanelAcquisition.Size = new System.Drawing.Size(450, 54);
+            this.flowLayoutPanelAcquisition.Size = new System.Drawing.Size(464, 54);
             this.flowLayoutPanelAcquisition.TabIndex = 110;
+            // 
+            // acquDatePartsBox
+            // 
+            this.acquDatePartsBox.AutoSize = true;
+            this.acquDatePartsBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.acquDatePartsBox.CheckedOther = false;
+            this.acquDatePartsBox.DataBindings.Add(new System.Windows.Forms.Binding("Visible", global::mymins.LayoutSettings.Default, "visAcquDatePartsBox", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.acquDatePartsBox.Location = new System.Drawing.Point(159, 3);
+            this.acquDatePartsBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
+            this.acquDatePartsBox.Name = "acquDatePartsBox";
+            this.acquDatePartsBox.Size = new System.Drawing.Size(151, 23);
+            this.acquDatePartsBox.TabIndex = 113;
+            this.acquDatePartsBox.TextDay = "";
+            this.acquDatePartsBox.TextMonth = "";
+            this.acquDatePartsBox.TextYear = "";
+            this.acquDatePartsBox.Visible = global::mymins.LayoutSettings.Default.visAcquDatePartsBox;
+            this.acquDatePartsBox.VisibleOther = false;
             // 
             // label2
             // 
@@ -2636,7 +2619,7 @@
             this.panelFromContact.Location = new System.Drawing.Point(18, 0);
             this.panelFromContact.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.panelFromContact.Name = "panelFromContact";
-            this.panelFromContact.Size = new System.Drawing.Size(497, 184);
+            this.panelFromContact.Size = new System.Drawing.Size(499, 184);
             this.panelFromContact.TabIndex = 61;
             this.panelFromContact.Visible = global::mymins.LayoutSettings.Default.visPanelFromContact;
             // 
@@ -2698,8 +2681,54 @@
             this.flowLayoutPanelFromContactOuter.Controls.Add(this.panelFromContact);
             this.flowLayoutPanelFromContactOuter.Location = new System.Drawing.Point(3, 230);
             this.flowLayoutPanelFromContactOuter.Name = "flowLayoutPanelFromContactOuter";
-            this.flowLayoutPanelFromContactOuter.Size = new System.Drawing.Size(515, 184);
+            this.flowLayoutPanelFromContactOuter.Size = new System.Drawing.Size(517, 184);
             this.flowLayoutPanelFromContactOuter.TabIndex = 60;
+            // 
+            // flowLayoutPanelMain1
+            // 
+            this.flowLayoutPanelMain1.AutoSize = true;
+            this.flowLayoutPanelMain1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.flowLayoutPanelMain1.Controls.Add(this.flowLayoutPanelSpecMins);
+            this.flowLayoutPanelMain1.Controls.Add(this.flowLayoutPanelSpecDetailsOuter);
+            this.flowLayoutPanelMain1.Controls.Add(this.flowLayoutPanelFromContactOuter);
+            this.flowLayoutPanelMain1.Location = new System.Drawing.Point(4, 4);
+            this.flowLayoutPanelMain1.Name = "flowLayoutPanelMain1";
+            this.flowLayoutPanelMain1.Size = new System.Drawing.Size(647, 417);
+            this.flowLayoutPanelMain1.TabIndex = 1;
+            // 
+            // tableLayoutPanelMain
+            // 
+            this.tableLayoutPanelMain.AutoSize = true;
+            this.tableLayoutPanelMain.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableLayoutPanelMain.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.tableLayoutPanelMain.ColumnCount = 1;
+            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelMain.Controls.Add(this.acquDataGridView, 0, 2);
+            this.tableLayoutPanelMain.Controls.Add(this.panel1, 0, 1);
+            this.tableLayoutPanelMain.Controls.Add(this.flowLayoutPanelMain1, 0, 0);
+            this.tableLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelMain.Location = new System.Drawing.Point(0, 25);
+            this.tableLayoutPanelMain.Name = "tableLayoutPanelMain";
+            this.tableLayoutPanelMain.RowCount = 3;
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanelMain.Size = new System.Drawing.Size(655, 590);
+            this.tableLayoutPanelMain.TabIndex = 0;
+            // 
+            // panel1
+            // 
+            this.panel1.AutoSize = true;
+            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel1.Controls.Add(this.label5);
+            this.panel1.Controls.Add(this.acquAddButton);
+            this.panel1.Controls.Add(this.flowLayoutPanelAcquisition);
+            this.panel1.Controls.Add(this.acquDeleteButton);
+            this.panel1.Location = new System.Drawing.Point(4, 425);
+            this.panel1.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(533, 60);
+            this.panel1.TabIndex = 100;
             // 
             // layoutTreeView
             // 
@@ -2852,96 +2881,52 @@
             treeNode37.Name = "Node35";
             treeNode37.Tag = "visPanelConMindatID";
             treeNode37.Text = "MindatID";
-            treeNode38.Checked = true;
             treeNode38.Name = "Node0";
-            treeNode38.Tag = "visFlowLayoutPanelExpoEdit";
-            treeNode38.Text = "Exposure Edit Panel";
-            treeNode39.Checked = true;
-            treeNode39.Name = "Node2";
-            treeNode39.Tag = "visLabelConPlus";
-            treeNode39.Text = "From Contact +/-";
+            treeNode38.Tag = "visExpoDatePartsBox";
+            treeNode38.Text = "Exposure Date";
+            treeNode39.Name = "Node0";
+            treeNode39.Tag = "visFlowLayoutPanelExpoEdit";
+            treeNode39.Text = "Exposure Edit Panel";
             treeNode40.Checked = true;
-            treeNode40.Name = "Node39";
-            treeNode40.Tag = "visPanelAcquTo";
-            treeNode40.Text = "To";
+            treeNode40.Name = "Node2";
+            treeNode40.Tag = "visLabelConPlus";
+            treeNode40.Text = "From Contact +/-";
             treeNode41.Checked = true;
-            treeNode41.Name = "Node40";
-            treeNode41.Tag = "visPanelAcquDate";
-            treeNode41.Text = "Date";
+            treeNode41.Name = "Node39";
+            treeNode41.Tag = "visPanelAcquTo";
+            treeNode41.Text = "To";
             treeNode42.Checked = true;
-            treeNode42.Name = "Node41";
-            treeNode42.Tag = "visPanelAcquPrice";
-            treeNode42.Text = "Price";
+            treeNode42.Name = "Node40";
+            treeNode42.Tag = "visAcquDatePartsBox";
+            treeNode42.Text = "Date";
             treeNode43.Checked = true;
-            treeNode43.Name = "Node42";
-            treeNode43.Tag = "visPanelAcquType";
-            treeNode43.Text = "Type";
+            treeNode43.Name = "Node41";
+            treeNode43.Tag = "visPanelAcquPrice";
+            treeNode43.Text = "Price";
             treeNode44.Checked = true;
-            treeNode44.Name = "Node45";
-            treeNode44.Tag = "visPanelAcquExposure";
-            treeNode44.Text = "Exposure";
+            treeNode44.Name = "Node42";
+            treeNode44.Tag = "visPanelAcquType";
+            treeNode44.Text = "Type";
             treeNode45.Checked = true;
-            treeNode45.Name = "Node0";
-            treeNode45.Tag = "visAcquDataGridView";
-            treeNode45.Text = "Acquisition Grid";
+            treeNode45.Name = "Node45";
+            treeNode45.Tag = "visPanelAcquExposure";
+            treeNode45.Text = "Exposure";
             treeNode46.Checked = true;
-            treeNode46.Name = "Node3";
-            treeNode46.Text = "Acquisitions";
+            treeNode46.Name = "Node0";
+            treeNode46.Tag = "visAcquDataGridView";
+            treeNode46.Text = "Acquisition Grid";
+            treeNode47.Checked = true;
+            treeNode47.Name = "Node3";
+            treeNode47.Text = "Acquisitions";
             this.layoutTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode8,
             treeNode22,
-            treeNode39,
-            treeNode46});
+            treeNode40,
+            treeNode47});
             this.layoutTreeView.Size = new System.Drawing.Size(121, 97);
             this.layoutTreeView.TabIndex = 396;
             this.layoutTreeView.Visible = false;
             this.layoutTreeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.layoutTreeViewAfterCheck);
-            // 
-            // flowLayoutPanelMain1
-            // 
-            this.flowLayoutPanelMain1.AutoSize = true;
-            this.flowLayoutPanelMain1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.flowLayoutPanelMain1.Controls.Add(this.flowLayoutPanelSpecMins);
-            this.flowLayoutPanelMain1.Controls.Add(this.flowLayoutPanelSpecDetailsOuter);
-            this.flowLayoutPanelMain1.Controls.Add(this.flowLayoutPanelFromContactOuter);
-            this.flowLayoutPanelMain1.Location = new System.Drawing.Point(4, 4);
-            this.flowLayoutPanelMain1.Name = "flowLayoutPanelMain1";
-            this.flowLayoutPanelMain1.Size = new System.Drawing.Size(647, 417);
-            this.flowLayoutPanelMain1.TabIndex = 1;
-            // 
-            // tableLayoutPanelMain
-            // 
-            this.tableLayoutPanelMain.AutoSize = true;
-            this.tableLayoutPanelMain.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tableLayoutPanelMain.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tableLayoutPanelMain.ColumnCount = 1;
-            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelMain.Controls.Add(this.acquDataGridView, 0, 2);
-            this.tableLayoutPanelMain.Controls.Add(this.panel1, 0, 1);
-            this.tableLayoutPanelMain.Controls.Add(this.flowLayoutPanelMain1, 0, 0);
-            this.tableLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelMain.Location = new System.Drawing.Point(0, 25);
-            this.tableLayoutPanelMain.Name = "tableLayoutPanelMain";
-            this.tableLayoutPanelMain.RowCount = 3;
-            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanelMain.Size = new System.Drawing.Size(655, 590);
-            this.tableLayoutPanelMain.TabIndex = 0;
-            // 
-            // panel1
-            // 
-            this.panel1.AutoSize = true;
-            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panel1.Controls.Add(this.label5);
-            this.panel1.Controls.Add(this.acquAddButton);
-            this.panel1.Controls.Add(this.flowLayoutPanelAcquisition);
-            this.panel1.Controls.Add(this.acquDeleteButton);
-            this.panel1.Location = new System.Drawing.Point(4, 425);
-            this.panel1.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(519, 60);
-            this.panel1.TabIndex = 100;
             // 
             // Form1
             // 
@@ -3058,6 +3043,7 @@
             this.flowLayoutPanelFromContact.ResumeLayout(false);
             this.flowLayoutPanelFromContact.PerformLayout();
             this.flowLayoutPanelExpoEdit.ResumeLayout(false);
+            this.flowLayoutPanelExpoEdit.PerformLayout();
             this.panelExpoEditAddDel.ResumeLayout(false);
             this.panelExpoEditAddDel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.expoBindingNavigator)).EndInit();
@@ -3065,14 +3051,10 @@
             this.expoBindingNavigator.PerformLayout();
             this.panelExpoName.ResumeLayout(false);
             this.panelExpoName.PerformLayout();
-            this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
             this.panelAcquFrom.ResumeLayout(false);
             this.panelAcquFrom.PerformLayout();
             this.panelAcquTo.ResumeLayout(false);
             this.panelAcquTo.PerformLayout();
-            this.panelAcquDate.ResumeLayout(false);
-            this.panelAcquDate.PerformLayout();
             this.panelAcquExposure.ResumeLayout(false);
             this.panelAcquExposure.PerformLayout();
             this.panelAcquPrice.ResumeLayout(false);
@@ -3080,6 +3062,7 @@
             this.panelAcquType.ResumeLayout(false);
             this.panelAcquType.PerformLayout();
             this.flowLayoutPanelAcquisition.ResumeLayout(false);
+            this.flowLayoutPanelAcquisition.PerformLayout();
             this.panelSpecDetails.ResumeLayout(false);
             this.panelSpecDetails.PerformLayout();
             this.panelFromContact.ResumeLayout(false);
@@ -3166,7 +3149,6 @@
         private System.Windows.Forms.BindingSource acquisitionBindingSource;
         private myminsDataSetTableAdapters.AcquisitionTableAdapter acquisitionTableAdapter;
         private myminsDataSetTableAdapters.ContactTypeTableAdapter contactTypeTableAdapter;
-        private System.Windows.Forms.DateTimePicker acquireDateDateTimePicker;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox countyComboBox;
         private System.Windows.Forms.BindingSource minsTypesBindingSource;
@@ -3240,7 +3222,6 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelAcquisition;
         private System.Windows.Forms.Panel panelAcquFrom;
         private System.Windows.Forms.Panel panelAcquTo;
-        private System.Windows.Forms.Panel panelAcquDate;
         private System.Windows.Forms.Panel panelAcquPrice;
         private System.Windows.Forms.Panel panelAcquType;
         private System.Windows.Forms.Panel panelAcquExposure;
@@ -3291,8 +3272,6 @@
         private System.Windows.Forms.Panel panelExpoName;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.TextBox expoNameTextBox;
-        private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Label label20;
         private System.Windows.Forms.BindingNavigator expoBindingNavigator;
         private System.Windows.Forms.ToolStripButton expoBindingNavigatorAddNewItem;
         private System.Windows.Forms.ToolStripButton expoBindingNavigatorDeleteItem;
@@ -3300,13 +3279,15 @@
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator3;
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator5;
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveNextItem1;
-        private System.Windows.Forms.DateTimePicker expoDateTimePicker;
         private System.Windows.Forms.DataGridViewTextBoxColumn From;
         private System.Windows.Forms.DataGridViewTextBoxColumn To;
         private System.Windows.Forms.DataGridViewTextBoxColumn Date;
         private System.Windows.Forms.DataGridViewTextBoxColumn Price;
         private System.Windows.Forms.DataGridViewTextBoxColumn Type;
         private System.Windows.Forms.DataGridViewTextBoxColumn Exposure;
+        private DatePartsBox acquDatePartsBox;
+        private DatePartsBox expoDatePartsBox;
+        private System.Windows.Forms.ToolStripButton helpToolStripButton;
 
     }
 }

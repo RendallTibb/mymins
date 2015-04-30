@@ -11,23 +11,29 @@
  - Some fields can be set to use data from the last specimen entered. And some Fields can be left blank after adding/updating entries.
 
 (Unimplemented)
+ - Save window size and positon.
+ - Add mineral/specimen color.
+ - Expand comment box size on focux.
+ - Edit for country, county, state, city, and acquisition type.
+ - Allow escaping field format errors using escape key or clicking the error icon instead of requiring changing the value to a correct format.
+ - Allow user to hide prompts.
  - Hover-over contact in acquisitions shows brief contact info.
  - Display a mineral's ID type(by icon?) in mineral lists.
  - Note effected specimens if a contact is deleted or updated.
  - Customize what warnings are displayed and what automatic operations are performed.
- - Notification near close button of number of unsaved changes.
  - Process time-based GPS formats and cardinal directions.
  - Allow phone number formatting. For other countries as well.
  - (optional)Auto-Increment of specimen IDs.
  - Allow adding/editing exposure date in the acquisition area.
+ - Acquisition reason? e.g., Historical, aesthetic, fill a void in collection. This may be left to the specimen comment.
+
  - One 'master' text box or edit area that can switch to different fields, allowing one to enter all data using that one text box or edit area.
-- A 'View Mode' specifically designed for collection viewing.
+ - A 'View Mode' specifically designed for collection viewing.
  - Program can generate a web-based collection display.
  - Easy database backup.
  - Browse to Mindat and minID pages
  - Collection searching.
  - Collection sorting.
- - Users can choose not do display fields that they don't intend to use.
  - Images
     * Can be displayed with search results or while adding/editing.
     * Image editing function in the application such as cropping.

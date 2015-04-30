@@ -1,3 +1,17 @@
+1.0.0 - 04/30/15 - Final updates for binary release.
+
+ - Changed framework from 4.5.1 to 4.0 client profile.
+ - Changed database from MS SQL to SQLite.
+ - Changed licens from GPL3 to MIT.
+ - Added more flexebility to Dates.
+ - Added About window.
+ - Added database error checking and compatibility check.
+ - User database moved to AppData folder for persistance.
+ - Notification of estimated unsaved changes on close.
+ - Notification of affected specimens on mineral deletion.
+ - Removed some unnecessary data saving.
+ - A column in the Acquisition view is hidden if a related panel is hidden. Also, the Exposure column is hidden if no Exposures are present.
+
 0.8.0 - 03/14/15 - Added several fields, UI customization.
 
  - Added fields: Specimen minID, Mineral Edit(Name, Member, MindatID), Specimen Details(Height, Weight, Length, Width, Units, Weight, wUnits, Repaired, Artificial, Appraisal, Rating, Transparency, Crystallization, Comment), From Contact(Name, Country, State, City, Address, Type, GPS lat, GPS lon, Phone, Email, Web, Comment, MindatID, Exposure Edit(Name, Date)), Acquisition(To, Price, Type, Exposure).
